@@ -4,9 +4,90 @@
 #include "pch.h"
 #include <iostream>
 
+using namespace std;
+
+struct node
+{
+	int data;
+	node *next;
+};
+
+class stack
+{
+	private: node *head, *tail;
+	public:	stack()
+	{
+		head = NULL;
+		tail = NULL;
+	}
+
+	void display()
+	{
+		node *temp = new node;
+		temp = tail;
+
+		while (temp != NULL)
+		{
+			cout << temp->data << "\t";
+			temp = temp->next;
+		}
+	}
+
+	void push(int value)
+	{
+		node *temp = new node;
+		node *last = new node;
+		temp->data = value;
+		temp->next = NULL;
+
+		if (head == NULL)
+		{
+			head = temp;
+			tail = temp;
+			temp = NULL;
+		} else
+		{
+			last = tail;
+			while (last->next != NULL)
+			{
+				last = last->next;
+			}
+
+			last->next = temp;
+			head = temp;
+		}
+	}
+
+	void pop()
+	{
+		node *temp = new node;
+		temp = tail;
+
+		while (temp->next != NULL)
+		{
+			head = temp;
+			temp = temp->next;
+		}
+		head->next = NULL;
+
+		delete temp;
+	}
+};
+
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	stack obj;
+	obj.push(1);
+	obj.push(2);
+	obj.push(3);
+	obj.pop();
+	obj.push(4);
+	obj.push(5);
+	obj.push(6);
+	obj.pop();
+	obj.pop();
+	obj.push(7);
+	obj.display();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
